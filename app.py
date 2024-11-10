@@ -1,10 +1,8 @@
-# pip install streamlit langchain lanchain-openai beautifulsoup4 python-dotenv chromadb
-
 import streamlit as st
+import mysql.connector as mydb
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-#from langchain_community.vectorstores import Chroma
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from dotenv import load_dotenv
@@ -12,7 +10,31 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
-load_dotenv()
+# コネクションの作成
+conn = mydb.connect(
+    host='www.ryhintl.com',
+    port='36000',
+    user='smairuser',
+    password='smairuser',
+    database='smair'
+)
+
+cur = conn.cursor()
+cur.execute("SELECT * FROM openai_payload")
+
+# 全てのデータを取得
+rows = cur.fetchall()
+    
+# Get api_key
+for (spoid, key_name, api_key) in rows:
+        OPENAI_API_KEY=f"{api_key}"
+        #api_key = f"{api_key}"
+        #print(api_key)
+    
+cur.close()
+conn.close()
+
+#load_dotenv()
 
 
 def get_vectorstore_from_url(url):
