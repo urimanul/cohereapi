@@ -1,5 +1,6 @@
 import streamlit as st
-from langchain_cohere import CohereEmbeddings
+from langchain.embeddings import CohereEmbeddings
+from langchain.core import SomeCoreClass  # 具体的なクラス名に置き換えてください
 
 # CohereEmbeddingsの初期化
 embeddings = CohereEmbeddings(
