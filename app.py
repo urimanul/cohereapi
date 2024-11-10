@@ -1,11 +1,12 @@
 import streamlit as st
-import { CohereEmbeddings } from "@langchain/cohere";
+from langchain.embeddings import CohereEmbeddings
 
-const embeddings = new CohereEmbeddings({
-  apiKey: "GqsxZlKmcBzSultkVOfKPf7kVhYkporXvivq9KHg", // In Node.js defaults to process.env.COHERE_API_KEY
-  batchSize: 48, // Default value if omitted is 48. Max value is 96
-  model: "embed-english-v3.0",
-});
+# CohereEmbeddingsの初期化
+embeddings = CohereEmbeddings(
+    api_key="GqsxZlKmcBzSultkVOfKPf7kVhYkporXvivq9KHg",  # Node.jsではprocess.env.COHERE_API_KEYがデフォルト
+    batch_size=48,  # 省略時のデフォルト値は48。最大値は96
+    model="embed-english-v3.0"
+)
 
 # 初期設定
 st.set_page_config(page_title="プロンプト生成", layout="centered")
